@@ -1,0 +1,75 @@
+import { client } from '../sanity.client'
+import type { Article, Category, LocalBanner } from '@/types'
+
+const articleFields = `
+  _id,
+  title,
+  slug,
+  featured,
+  publishedAt,
+  excerpt,
+  seoTitle,
+  seoDescription,
+  mainImage { ..., alt },
+  category->{ _id, title, slug },
+  author->{ _id, name, slug }
+`
+
+export async function getFeaturedArticle(): Promise<Article | null> {
+  return client.fetch(
+    `*[_type == "article" && featured == true] | order(publishedAt desc) [0] { ${articleFields} }`,
+    {},
+    { next: { revalidate: 60 } }
+  )
+}
+
+export async function getLatestArticles(limit = 6): Promise<Article[]> {
+  return client.fetch(
+    `*[_type == "article"] | order(publishedAt desc) [0...$limit] { ${articleFields} }`,
+    { limit },
+    { next: { revalidate: 60 } }
+  )
+}
+
+export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  return client.fetch(
+    `*[_type == "article" && slug.current == $slug][0] {
+      ${articleFields},
+      body
+    }`,
+    { slug },
+    { next: { revalidate: 30 } }
+  )
+}
+
+export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {
+  return client.fetch(
+    `*[_type == "article" && category->slug.current == $categorySlug] | order(publishedAt desc) { ${articleFields} }`,
+    { categorySlug },
+    { next: { revalidate: 60 } }
+  )
+}
+
+export async function getAllCategories(): Promise<Category[]> {
+  return client.fetch(
+    `*[_type == "category"] | order(title asc) { _id, title, slug, description }`,
+    {},
+    { next: { revalidate: 3600 } }
+  )
+}
+
+export async function getAllArticleSlugs(): Promise<Array<{ slug: { current: string }; category: { slug: { current: string } } }>> {
+  return client.fetch(
+    `*[_type == "article"] { slug, category->{ slug } }`,
+    {},
+    { next: { revalidate: 60 } }
+  )
+}
+
+export async function getLocalBanner(placement: string): Promise<LocalBanner | null> {
+  return client.fetch(
+    `*[_type == "localBanner" && placement == $placement && active == true][0]`,
+    { placement },
+    { next: { revalidate: 60 } }
+  )
+}

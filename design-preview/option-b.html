@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opção B — Off-white + Preto + Âmbar/Dourado</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FDFAF4;
+    --ink: #1C1A14;
+    --amber: #C8860A;
+    --amber-light: #F5E6C0;
+    --muted: #6B6455;
+    --border: #E0D9C8;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Inter', sans-serif;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); }
+
+  /* HEADER */
+  header {
+    border-bottom: 2px solid var(--amber);
+    padding: 0 48px;
+    background: var(--bg);
+  }
+  .header-strip {
+    background: var(--ink);
+    color: var(--amber-light);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 6px;
+    margin: 0 -48px;
+    margin-bottom: 0;
+  }
+  .header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-wrap { text-align: center; }
+  .logo-sub { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .logo {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1;
+    display: block;
+  }
+  .logo em { color: var(--amber); font-style: normal; }
+  .date-weather { font-size: 12px; color: var(--muted); line-height: 1.6; text-align: right; }
+  .weather-icon { font-size: 22px; }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+  nav a {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 11px 20px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--amber); }
+  nav a.active { color: var(--ink); border-bottom-color: var(--amber); font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    padding: 48px 48px 40px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    margin-bottom: 20px;
+  }
+  .hero-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--amber); }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .hero-excerpt {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 28px;
+    max-width: 520px;
+  }
+  .hero-byline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .byline-dot { width: 4px; height: 4px; background: var(--amber); border-radius: 50%; }
+
+  .hero-aside { display: flex; flex-direction: column; gap: 0; }
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(160deg, #3a3020 0%, #1c1a14 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #665c3a;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .aside-list { display: flex; flex-direction: column; gap: 0; }
+  .aside-item {
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+  }
+  .aside-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--amber-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .aside-title {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .aside-tag { font-size: 10px; color: var(--amber); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+
+  /* BREAKING */
+  .breaking {
+    background: var(--amber);
+    color: var(--ink);
+    padding: 10px 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+  }
+  .breaking strong { font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; background: var(--ink); color: var(--amber); padding: 2px 8px; }
+
+  /* GRID */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 48px 0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .section-head span { color: var(--amber); font-size: 18px; font-family: var(--serif); }
+  .section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding: 24px 48px 48px;
+  }
+  .card {}
+  .card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--amber-light);
+    margin-bottom: 14px;
+  }
+  .card-tag { font-size: 10px; color: var(--amber); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .card-tag::before { content: ''; width: 14px; height: 2px; background: var(--amber); }
+  .card-title { font-family: var(--serif); font-size: 18px; font-weight: 700; line-height: 1.35; color: var(--ink); margin-bottom: 10px; }
+  .card-excerpt { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
+  .card-meta { font-size: 11px; color: #AAA090; }
+
+  .design-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--ink);
+    color: var(--amber);
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-left: 3px solid var(--amber);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-strip">Itapoá, SC · Litoral Norte Catarinense · Terça-feira, 24 de março de 2026</div>
+  <div class="header-main">
+    <div style="font-size:12px;color:var(--muted);max-width:200px;line-height:1.5">Notícias locais para<br>quem vive e ama Itapoá</div>
+    <div class="logo-wrap">
+      <div class="logo-sub">Fundado em 2026</div>
+      <a href="#" class="logo">The Itapoá <em>Times</em></a>
+    </div>
+    <div class="date-weather">
+      <div class="weather-icon">☀️</div>
+      <div>28°C · Ensolarado<br>Itapoá, SC</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Cidade</a>
+    <a href="#">Política</a>
+    <a href="#">Porto</a>
+    <a href="#">Turismo</a>
+    <a href="#">Segurança</a>
+    <a href="#">Meio Ambiente</a>
+    <a href="#">Esporte</a>
+    <a href="#">Serviços</a>
+  </nav>
+</header>
+
+<div class="breaking">
+  <strong>Urgente</strong>
+  Baleia jubarte é encontrada encalhada na Praia Barra do Saí — equipes da prefeitura já estão no local
+</div>
+
+<section class="hero">
+  <div>
+    <div class="hero-tag">Porto</div>
+    <h1 class="hero-title">Porto Itapoá lidera ranking nacional pelo décimo ano consecutivo</h1>
+    <p class="hero-excerpt">Terminal catarinense consolida posição de liderança em satisfação de clientes e anuncia novo marco: 2 milhões de litros de água reutilizados em suas operações.</p>
+    <div class="hero-byline">
+      <span>Por Redação</span>
+      <span class="byline-dot"></span>
+      <span>Hoje às 09:14</span>
+      <span class="byline-dot"></span>
+      <span>4 min de leitura</span>
+    </div>
+  </div>
+  <div class="hero-aside">
+    <div class="hero-img">[ foto ]</div>
+    <div class="aside-list">
+      <div class="aside-item">
+        <div class="aside-num">01</div>
+        <div>
+          <div class="aside-tag">Meio Ambiente</div>
+          <div class="aside-title">Jubarte encalha na Barra do Saí e mobiliza equipes</div>
+        </div>
+      </div>
+      <div class="aside-item">
+        <div class="aside-num">02</div>
+        <div>
+          <div class="aside-tag">Política</div>
+          <div class="aside-title">Câmara homenageia mulheres destaque do município</div>
+        </div>
+      </div>
+      <div class="aside-item">
+        <div class="aside-num">03</div>
+        <div>
+          <div class="aside-tag">Trânsito</div>
+          <div class="aside-title">Deputado reúne poder público para debater trânsito de carretas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-head"><span>✦</span> Últimas Notícias</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-img"></div>
+    <div class="card-tag">Segurança</div>
+    <div class="card-title">Reunião debate solução para o trânsito pesado nas vias de acesso ao porto</div>
+    <div class="card-excerpt">Deputado federal Zé Trovão articulou encontro entre poder público municipal e transportadores.</div>
+    <div class="card-meta">Há 2 horas</div>
+  </div>
+  <div class="card">
+    <div class="card-img"></div>
+    <div class="card-tag">Turismo</div>
+    <div class="card-title">Litoral de SC encerra verão com maioria das praias próprias para banho</div>
+    <div class="card-excerpt">Relatório do IMA aponta melhora geral na balneabilidade do litoral catarinense.</div>
+    <div class="card-meta">Há 4 horas</div>
+  </div>
+  <div class="card">
+    <div class="card-img"></div>
+    <div class="card-tag">Serviços</div>
+    <div class="card-title">Prefeitura abre processo seletivo para profissionais de saúde</div>
+    <div class="card-excerpt">Vagas visam reforçar a rede básica antes da temporada turística de inverno.</div>
+    <div class="card-meta">Há 6 horas</div>
+  </div>
+</div>
+
+<div class="design-badge">Opção B — Âmbar Costeiro</div>
+
+</body>
+</html>

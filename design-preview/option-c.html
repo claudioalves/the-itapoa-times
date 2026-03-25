@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opção C — Cream + Verde-Floresta + Terracota</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Source+Serif+4:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F0E8;
+    --ink: #1E2A1A;
+    --green: #2D5016;
+    --green-mid: #4A7C35;
+    --terra: #C4511F;
+    --cream: #EDE5D0;
+    --muted: #5A6B52;
+    --border: #C8BEA8;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --display: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); }
+
+  /* HEADER */
+  header { padding: 0 48px; background: var(--green); }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .logo-area { padding: 20px 0; }
+  .logo-eyebrow { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .logo {
+    font-family: var(--display);
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #FFFFFF;
+    text-decoration: none;
+    line-height: 1;
+    display: block;
+  }
+  .logo em { color: var(--terra); font-style: normal; }
+
+  .header-right { display: flex; align-items: center; gap: 24px; }
+  .header-info { text-align: right; }
+  .header-date { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .header-weather { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; }
+
+  nav { display: flex; }
+  nav a {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 14px 16px;
+    border-top: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  nav a:hover { color: #fff; border-top-color: var(--terra); }
+  nav a.active { color: #fff; border-top-color: var(--terra); font-weight: 600; }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    min-height: 480px;
+  }
+  .hero-text {
+    padding: 48px 48px 48px 48px;
+    background: var(--green);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--terra);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 5px 12px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+  .hero-title {
+    font-family: var(--display);
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+  .hero-excerpt {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 28px;
+    max-width: 500px;
+  }
+  .hero-meta { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .hero-meta span { color: rgba(255,255,255,0.8); }
+
+  .hero-right { display: flex; flex-direction: column; }
+  .hero-img {
+    flex: 1;
+    background: linear-gradient(160deg, #3d5c28 0%, #1e2a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-height: 280px;
+  }
+  .hero-sidebar {
+    background: var(--cream);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hs-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px; }
+  .hs-item { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+  .hs-item:last-child { border-bottom: none; }
+  .hs-dot { width: 6px; height: 6px; background: var(--terra); border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .hs-title { font-family: var(--serif); font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+  .hs-cat { font-size: 10px; color: var(--green-mid); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+
+  /* TOPICS BAR */
+  .topics {
+    background: var(--cream);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .topics-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: 8px; }
+  .topic-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .topic-pill:hover, .topic-pill.active { background: var(--green); color: white; border-color: var(--green); }
+
+  /* GRID */
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 0;
+    padding: 0 48px;
+  }
+  .news-col { padding: 32px 40px 40px 0; border-right: 1px solid var(--border); }
+  .news-col-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .news-col-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .card { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .card:last-child { border-bottom: none; }
+  .card-img { width: 120px; height: 80px; background: var(--cream); flex-shrink: 0; border-radius: 2px; }
+  .card-content {}
+  .card-tag { font-size: 10px; color: var(--terra); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .card-title { font-family: var(--serif); font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--ink); margin-bottom: 6px; }
+  .card-excerpt { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+  .card-meta { font-size: 11px; color: #9A9080; }
+
+  .side-col { padding: 32px 0 40px 32px; }
+  .side-section { margin-bottom: 28px; }
+  .side-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--green); display: inline-block; }
+  .side-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .side-item:last-child { border-bottom: none; }
+  .side-item-tag { font-size: 10px; color: var(--green-mid); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .side-item-title { font-family: var(--serif); font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+
+  .ad-slot { background: var(--cream); border: 1px dashed var(--border); padding: 20px; text-align: center; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 24px; }
+
+  .design-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--green);
+    color: white;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-left: 3px solid var(--terra);
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-eyebrow">Litoral Norte de Santa Catarina</div>
+      <a href="#" class="logo">The Itapoá <em>Times</em></a>
+    </div>
+    <div class="header-right">
+      <div class="header-info">
+        <div class="header-date">Terça, 24 de março de 2026</div>
+        <div class="header-weather">☀️ 28°C · Itapoá, SC</div>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Cidade</a>
+    <a href="#">Política</a>
+    <a href="#">Porto</a>
+    <a href="#">Turismo</a>
+    <a href="#">Segurança</a>
+    <a href="#">Meio Ambiente</a>
+    <a href="#">Esporte</a>
+    <a href="#">Serviços</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">Porto</span>
+    <h1 class="hero-title">Porto Itapoá lidera ranking nacional pelo décimo ano seguido</h1>
+    <p class="hero-excerpt">Terminal do litoral norte de Santa Catarina confirma liderança em satisfação e anuncia 2 milhões de litros de água reutilizados — marco histórico em sustentabilidade.</p>
+    <span class="hero-meta">Por <span>Redação</span> · Hoje às 09:14 · 4 min de leitura</span>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">[ foto destaque ]</div>
+    <div class="hero-sidebar">
+      <div class="hs-label">Também em destaque</div>
+      <div class="hs-item">
+        <div class="hs-dot"></div>
+        <div>
+          <div class="hs-cat">Meio Ambiente</div>
+          <div class="hs-title">Baleia jubarte é encontrada na Praia Barra do Saí</div>
+        </div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-dot"></div>
+        <div>
+          <div class="hs-cat">Política</div>
+          <div class="hs-title">Câmara homenageia mulheres destaque do município</div>
+        </div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-dot"></div>
+        <div>
+          <div class="hs-cat">Trânsito</div>
+          <div class="hs-title">Deputado reúne poder público para debater carretas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="topics">
+  <span class="topics-label">Tópicos</span>
+  <span class="topic-pill active">Todos</span>
+  <span class="topic-pill">Porto</span>
+  <span class="topic-pill">Praia</span>
+  <span class="topic-pill">Temporada</span>
+  <span class="topic-pill">Segurança</span>
+  <span class="topic-pill">Meio Ambiente</span>
+</div>
+
+<div class="main-content">
+  <div class="news-col">
+    <div class="news-col-head">Últimas Notícias</div>
+
+    <div class="card">
+      <div class="card-img"></div>
+      <div class="card-content">
+        <div class="card-tag">Segurança</div>
+        <div class="card-title">Zé Trovão reúne poder público para resolver trânsito de caminhões</div>
+        <div class="card-excerpt">Deputado federal articulou reunião para discutir alternativas de mobilidade urbana.</div>
+        <div class="card-meta">Há 2 horas · Política</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"></div>
+      <div class="card-content">
+        <div class="card-tag">Turismo</div>
+        <div class="card-title">Litoral de SC encerra verão com maioria das praias próprias para banho</div>
+        <div class="card-excerpt">Relatório do IMA aponta melhora nas condições de balneabilidade no litoral catarinense.</div>
+        <div class="card-meta">Há 4 horas · Meio Ambiente</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"></div>
+      <div class="card-content">
+        <div class="card-tag">Serviços</div>
+        <div class="card-title">Prefeitura abre processo seletivo para profissionais de saúde</div>
+        <div class="card-excerpt">Vagas visam reforçar a rede básica antes da temporada turística de inverno.</div>
+        <div class="card-meta">Há 6 horas · Cidade</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-col">
+    <div class="side-section">
+      <div class="side-head">Mais Lidas</div>
+      <div class="side-item">
+        <div class="side-item-tag">Porto</div>
+        <div class="side-item-title">Porto Itapoá bate recorde de containers em fevereiro</div>
+      </div>
+      <div class="side-item">
+        <div class="side-item-tag">Turismo</div>
+        <div class="side-item-title">Temporada de inverno começa em junho com programação cultural</div>
+      </div>
+      <div class="side-item">
+        <div class="side-item-tag">Serviços</div>
+        <div class="side-item-title">Nova UPA começa a funcionar em abril no centro da cidade</div>
+      </div>
+    </div>
+    <div class="ad-slot">Espaço Publicitário<br>300 × 250</div>
+  </div>
+</div>
+
+<div class="design-badge">Opção C — Verde Floresta</div>
+
+</body>
+</html>

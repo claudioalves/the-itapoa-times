@@ -51,11 +51,18 @@ export async function getArticlesByCategory(categorySlug: string): Promise<Artic
 }
 
 export async function getAllCategories(): Promise<Category[]> {
-  return client.fetch(
+  const all = await client.fetch<Category[]>(
     `*[_type == "category"] | order(title asc) { _id, title, slug, description }`,
     {},
     { next: { revalidate: 3600 } }
   )
+  // Deduplicar por slug caso o seed tenha rodado mais de uma vez
+  const seen = new Set<string>()
+  return all.filter((cat) => {
+    if (seen.has(cat.slug.current)) return false
+    seen.add(cat.slug.current)
+    return true
+  })
 }
 
 export async function getAllArticleSlugs(): Promise<Array<{ slug: { current: string }; category: { slug: { current: string } } }>> {

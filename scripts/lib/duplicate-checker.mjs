@@ -45,6 +45,7 @@ async function getRecentTitles() {
   if (cachedTitles) return cachedTitles
 
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+  // Inclui rascunhos na verificação para evitar duplicatas com artigos pendentes
   const articles = await sanity.fetch(
     `*[_type == "article" && publishedAt > $since] { title }`,
     { since: thirtyDaysAgo }

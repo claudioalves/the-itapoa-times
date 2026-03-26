@@ -1,6 +1,9 @@
 import { client } from '../sanity.client'
 import type { Article, Category, LocalBanner } from '@/types'
 
+// Exclui rascunhos do agente (IDs começando com "drafts.")
+const PUBLISHED = `!(_id in path("drafts.**"))`
+
 const articleFields = `
   _id,
   title,
@@ -17,7 +20,7 @@ const articleFields = `
 
 export async function getFeaturedArticle(): Promise<Article | null> {
   return client.fetch(
-    `*[_type == "article" && featured == true] | order(publishedAt desc) [0] { ${articleFields} }`,
+    `*[_type == "article" && featured == true && ${PUBLISHED}] | order(publishedAt desc) [0] { ${articleFields} }`,
     {},
     { next: { revalidate: 60 } }
   )
@@ -25,7 +28,7 @@ export async function getFeaturedArticle(): Promise<Article | null> {
 
 export async function getLatestArticles(limit = 6): Promise<Article[]> {
   return client.fetch(
-    `*[_type == "article"] | order(publishedAt desc) [0...$limit] { ${articleFields} }`,
+    `*[_type == "article" && ${PUBLISHED}] | order(publishedAt desc) [0...$limit] { ${articleFields} }`,
     { limit },
     { next: { revalidate: 60 } }
   )
@@ -33,7 +36,7 @@ export async function getLatestArticles(limit = 6): Promise<Article[]> {
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return client.fetch(
-    `*[_type == "article" && slug.current == $slug][0] {
+    `*[_type == "article" && slug.current == $slug && ${PUBLISHED}][0] {
       ${articleFields},
       body
     }`,
@@ -44,7 +47,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 
 export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {
   return client.fetch(
-    `*[_type == "article" && category->slug.current == $categorySlug] | order(publishedAt desc) { ${articleFields} }`,
+    `*[_type == "article" && category->slug.current == $categorySlug && ${PUBLISHED}] | order(publishedAt desc) { ${articleFields} }`,
     { categorySlug },
     { next: { revalidate: 60 } }
   )
@@ -67,7 +70,7 @@ export async function getAllCategories(): Promise<Category[]> {
 
 export async function getAllArticleSlugs(): Promise<Array<{ slug: { current: string }; category: { slug: { current: string } } }>> {
   return client.fetch(
-    `*[_type == "article"] { slug, category->{ slug } }`,
+    `*[_type == "article" && ${PUBLISHED}] { slug, category->{ slug } }`,
     {},
     { next: { revalidate: 60 } }
   )

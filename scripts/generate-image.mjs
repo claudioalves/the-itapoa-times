@@ -2,10 +2,11 @@
  * Gerador de imagens para artigos do The Itapoá Times
  *
  * Uso:
- *   node scripts/generate-image.mjs <slug-do-artigo>
+ *   node scripts/generate-image.mjs <slug-do-artigo> [descrição customizada]
  *
- * Exemplo:
+ * Exemplos:
  *   node scripts/generate-image.mjs prefeitura-abre-vagas-concurso
+ *   node scripts/generate-image.mjs baleia-jubarte "humpback whale beached on sandy beach Brazil"
  *
  * O script:
  *  1. Busca o artigo no Sanity pelo slug
@@ -53,8 +54,9 @@ if (!SANITY_TOKEN) {
 }
 
 const slug = process.argv[2]
+const customDesc = process.argv[3] ?? null
 if (!slug) {
-  console.error('❌ Informe o slug do artigo: node scripts/generate-image.mjs <slug>')
+  console.error('❌ Informe o slug do artigo: node scripts/generate-image.mjs <slug> [descrição]')
   process.exit(1)
 }
 
@@ -155,7 +157,10 @@ async function main() {
   }
 
   // 2. Gerar imagem
-  const buffer = await generateImage(article.title, article.excerpt)
+  const buffer = await generateImage(
+    customDesc ?? article.title,
+    customDesc ? null : article.excerpt
+  )
 
   // 3. Upload para Sanity
   const filename = `${article.slug.current}-${Date.now()}.jpg`

@@ -1,0 +1,35 @@
+name: Agente de Redação Automática
+
+on:
+  schedule:
+    # Roda todo dia às 10:00 UTC = 07:00 horário de Brasília
+    - cron: '0 10 * * *'
+  # Permite disparar manualmente pelo GitHub
+  workflow_dispatch:
+
+jobs:
+  write-articles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+        run: node scripts/agent-writer.mjs

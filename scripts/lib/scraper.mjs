@@ -13,6 +13,17 @@ const QUERIES = [
   { q: 'litoral norte SC Itapoá', name: 'Google News: Litoral Norte' },
 ]
 
+const MAX_AGE_DAYS = 5
+
+function isRecent(pubDate) {
+  if (!pubDate) return true // sem data, aceita
+  const date = new Date(pubDate)
+  if (isNaN(date.getTime())) return true // data inválida, aceita
+  const diffMs = Date.now() - date.getTime()
+  const diffDays = diffMs / (1000 * 60 * 60 * 24)
+  return diffDays <= MAX_AGE_DAYS
+}
+
 function buildGoogleNewsURL(query) {
   const encoded = encodeURIComponent(query)
   return `https://news.google.com/rss/search?q=${encoded}&hl=pt-BR&gl=BR&ceid=BR:pt-419`
@@ -46,7 +57,7 @@ async function fetchGoogleNewsRSS(query) {
       const pubDate = $(el).find('pubDate').first().text().trim()
       const sourceName = $(el).find('source').first().text().trim() || query.name
 
-      if (title && title.length > 15) {
+      if (title && title.length > 15 && isRecent(pubDate)) {
         items.push({ title, link, description, pubDate, source: sourceName })
       }
     })
